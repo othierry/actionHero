@@ -164,7 +164,11 @@ var web = function(api, options, next){
 
       if(typeof(api.config.servers.web.httpHeaders) != null){
         for(i in api.config.servers.web.httpHeaders){
-          responseHeaders.push([i, api.config.servers.web.httpHeaders[i]]);
+          var value = api.config.servers.web.httpHeaders[i];
+          if (typeof value === 'function') {
+            value = value(req, api);
+          }
+          responseHeaders.push([i, value]);
         }
       }
 
