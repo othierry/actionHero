@@ -3,6 +3,9 @@ var readline = require('readline');
 
 exports['start'] = function(binary, next){
 
+  // Make sure we are loading the good directory (deploy:symlink issue)
+  process.chdir(binary.paths.project_root);
+
   var actionHeroPrototype = require(binary.paths.actionHero_root + '/actionHero.js').actionHeroPrototype;
   var actionHero = new actionHeroPrototype();
   var shutdownTimeout = 1000 * 30 // number of ms to wait to do a forcible shutdown if actionHero won't stop gracefully
