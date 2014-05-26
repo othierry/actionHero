@@ -297,7 +297,10 @@ var web = function(api, options, next){
       var methods = 'HEAD, GET, POST, PUT, DELETE, OPTIONS, TRACE';
       connection.rawConnection.responseHeaders.push(['Access-Control-Allow-Methods', methods]);
     }
-    if(api.config.servers.web.httpHeaders['Access-Control-Allow-Origin'] == null && extractHeader(connection, 'Access-Control-Allow-Origin') == null){
+    if (api.config.servers.web.httpHeaders['Access-Control-Allow-Origin'] == null && api.config.servers.web.httpHeaders['Access-Control-Allow-Credentials'] === 'true' && extractHeader(connection, 'Access-Control-Allow-Origin') == null) {
+      var origin = connection.rawConnection.req.headers.origin || '*';
+      connection.rawConnection.responseHeaders.push(['Access-Control-Allow-Origin', origin]);
+    } else if(api.config.servers.web.httpHeaders['Access-Control-Allow-Origin'] == null && extractHeader(connection, 'Access-Control-Allow-Origin') == null){
       var origin = '*';
       connection.rawConnection.responseHeaders.push(['Access-Control-Allow-Origin', origin]);
     }
