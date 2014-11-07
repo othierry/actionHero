@@ -3,6 +3,8 @@
 // evan@evantahler.com
 // https://github.com/evantahler/actionhero
 
+require('newrelic');
+
 var fs = require('fs');
 var path = require('path');
 var async = require('async');
